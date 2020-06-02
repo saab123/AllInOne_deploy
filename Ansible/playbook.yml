@@ -1,0 +1,11 @@
+---
+- name: "install"
+  hosts: master-vm
+  become: true
+  tasks:
+    - git:
+        repo: 'https://github.com/openshift/openshift-ansible'
+        dest: /home/testadmin/gitlabpipeline/openshift
+        version: release-3.11
+        clone: yes
+        

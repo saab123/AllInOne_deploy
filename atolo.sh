@@ -1,0 +1,1 @@
+ssh -i ./key/ssh-key testadmin@master-ssh.westeurope.cloudapp.azure.com

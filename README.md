@@ -1,1 +1,3 @@
-# AllInOne_deploy
+# gitlabPipeline
+
+gitlab pipeline to deploy on azure

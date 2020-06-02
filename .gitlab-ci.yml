@@ -1,0 +1,53 @@
+image:
+  name: hashicorp/terraform:latest
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  
+
+
+before_script:
+  - terraform --version
+  - cd Terraform && terraform init
+  #- apt-get install ansible
+  #- ansible --version
+
+stages:
+  - plan
+  - deploy
+  - destroy
+     
+
+
+plan:
+  stage: plan
+  script:
+   
+    - terraform plan -out='publisher'
+    - ls -la
+    - pwd
+  artifacts:
+    paths:
+      - '/builds/Saab123/gitlabpipeline/Terraform/'
+
+deploy:
+    
+  stage: deploy
+  script:
+    - terraform apply -auto-approve 'publisher'
+    - ls -la
+    - pwd
+  dependencies:
+    - plan
+  artifacts:
+    paths:
+      - '/builds/Saab123/gitlabpipeline/Terraform/terraform.tfstate'
+  when : manual
+
+destroy:
+  stage: destroy
+  script:
+    - terraform destroy -auto-approve
+  dependencies:
+    - deploy
+  when: manual
